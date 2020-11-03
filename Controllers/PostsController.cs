@@ -18,7 +18,9 @@ namespace Challenge_Alkemy.Controllers
         // GET: Posts
         public ActionResult Index()
         {
-            return View(db.Posts.ToList());
+            var result = db.Posts.OrderByDescending(p => p.Fecha_Creacion).ToList();
+
+            return View(result);
         }
 
         // GET: Posts/Details/5
