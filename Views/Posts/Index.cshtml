@@ -10,6 +10,12 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<form asp-area="" asp-controller="Posts" asp-action="Index">
+    <p>
+        Buscar Post: <input type="text" name="searchID">
+        <input type="submit" value="Buscar" />
+    </p>
+</form>
 <table class="table">
     <tr>
         <th>

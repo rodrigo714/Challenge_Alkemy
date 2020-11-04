@@ -14,6 +14,7 @@ namespace Challenge_Alkemy.Models
         public string Contenido { get; set; }
         public byte[] Imagen { get; set; }
         public int Categoria { get; set; }
+        [Display(Name ="Fecha Creacion")]
         public DateTime Fecha_Creacion { get; set; }
     }
 }

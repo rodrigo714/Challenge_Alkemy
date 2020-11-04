@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -14,11 +15,24 @@ namespace Challenge_Alkemy.Controllers
     public class PostsController : Controller
     {
         private Challenge_AlkemyContext db = new Challenge_AlkemyContext();
+        private List<Posts> result;
 
         // GET: Posts
-        public ActionResult Index()
+        public ActionResult Index(int? searchID)
         {
-            var result = db.Posts.OrderByDescending(p => p.Fecha_Creacion).ToList();
+
+            if (searchID != null)
+            {
+                result = db.Posts.Where(p => p.ID == searchID).ToList();
+                if (result.Count == 0)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest); /// Prefiero que liste todos y no este horrible error
+                }
+            }
+            else
+            {
+                result = db.Posts.OrderByDescending(p => p.Fecha_Creacion).ToList();
+            }
 
             return View(result);
         }
@@ -49,9 +63,19 @@ namespace Challenge_Alkemy.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Titulo,Contenido,Imagen,Categoria,Fecha_Creacion")] Posts posts)
+        public ActionResult Create([Bind(Include = "ID,Titulo,Contenido,Categoria,Fecha_Creacion")] Posts posts, HttpPostedFileBase file)
         {
-            if (ModelState.IsValid)
+            if (posts.Imagen != null)
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    file.InputStream.CopyTo(ms);
+                    byte[] array = ms.GetBuffer();
+                    posts.Imagen = array;
+                }
+            }
+
+                if (ModelState.IsValid)
             {
                 db.Posts.Add(posts);
                 db.SaveChanges();
