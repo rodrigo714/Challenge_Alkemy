@@ -36,32 +36,23 @@
                 @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Imagen, new { htmlAttributes = new { @class = "form-control" } })
-                    <input type="file" name="fileupload" />
+                    
                     @Html.ValidationMessageFor(model => model.Imagen, "", new { @class = "text-danger" })
                 </div>
             </div>*@
 
-        @*@using (Html.BeginForm("Create", "Posts", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <label for="file">Subir Imagen:</label>
-                <input type="file" name="file" id="file" style="width: 100%;" />
-                <input type="submit" value="Subir" class="submit" />
-            }*@
-
-        @*<input type="file" id="FileUpload1" />
-        <input type="button" id="btnUpload" value="Upload Files" />*@
-
         <div class="form-group">
-            <div class="thumbnail">
-                <output id="postImage">
-                    <img src="~/App_Data/peron.jpg" typeof="data/image" width="450" height="200" class="postImage" />
-                </output>
+            <div style="display:none;">
+                <img id="image" alt="" src="" class="img-responsive">
+
+            </div>
+
+            <div>
+                <input type="file" name="fileupload" />
+                <label for="files">Cargar Imagen</label>
+                <input class="file-input" type="file" id="txtUploadFile" name="files" />
             </div>
         </div>
-        <div class="form-group btn btn-success">
-            <label for="files">Cargar Imagen</label>
-            <input asp-for="AvatarImage" accept="image/*" class="file-input" type="file" id="files" />
-        </div> 
 
 
         <div class="form-group">
@@ -92,6 +83,45 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+@*@Html.Partial("~/Views/Shared/_UploadPartial.cshtml")*@
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+    var model = @Html.Raw(Json.Encode(Model));
+
+    $('#txtUploadFile').on('change', function (e) {
+        var files = e.target.files;
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    data.append("file" + x, files[x]);
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '/Posts/UploadFile/' + model,
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        $('#image').attr('src', '@Url.Content("~/Content/img/")' + result.fileName);
+                    },
+                    error: function (xhr, status, p3, p4) {
+                        var err = "Error " + " " + status + " " + p3 + " " + p4;
+                        if (xhr.responseText && xhr.responseText[0] == "{")
+                            err = JSON.parse(xhr.responseText).Message;
+                        console.log(err);
+                    }
+                });
+            } else {
+                alert("This browser doesn't support HTML5 file uploads!");
+            }
+        }
+    });
+    </script>
 }
+

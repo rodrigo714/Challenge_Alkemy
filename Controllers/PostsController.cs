@@ -18,11 +18,11 @@ namespace Challenge_Alkemy.Controllers
         private List<Posts> result;
 
         // GET: Posts
-        public ActionResult Index(int? searchID)
+        public ActionResult Index(string searchID)
         {
             if (searchID != null)
             {
-                result = db.Posts.Where(p => p.ID == searchID).ToList();
+                result = db.Posts.Where(p => p.Titulo.Contains(searchID)).ToList();
                 if (result.Count == 0)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest); /// Prefiero que liste todos y no este horrible error
@@ -150,50 +150,30 @@ namespace Challenge_Alkemy.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFiles()
+        public JsonResult UploadFile(string id)
         {
-            // Checking no of files injected in Request object  
+            var path = "";
+            var fileExtension = "";
+            var fileName = "";
+
             if (Request.Files.Count > 0)
             {
-                try
+                HttpPostedFileBase file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
                 {
-                    //  Get all files from Request object  
-                    HttpFileCollectionBase files = Request.Files;
-                    for (int i = 0; i < files.Count; i++)
+                    fileName = Path.GetFileName(file.FileName);
+                    fileExtension = Path.GetExtension(file.FileName);
+
+                    if (id != "null")
                     {
-                        string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";
-                        string filename = Path.GetFileName(Request.Files[i].FileName);
+                        //do bits, save to DB etc./..
 
-                        HttpPostedFileBase file = files[i];
-                        string fname;
-
-                        // Checking for Internet Explorer  
-                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
-                        {
-                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
-                            fname = testfiles[testfiles.Length - 1];
-                        }
-                        else
-                        {
-                            fname = file.FileName;
-                        }
-
-                        // Get the complete folder path and store the file inside it.  
-                        fname = Path.Combine(Server.MapPath("~/Uploads/"), fname);
-                        file.SaveAs(fname);
+                        file.SaveAs(path);
                     }
-                    // Returns message that successfully uploaded  
-                    return Json("File Uploaded Successfully!");
-                }
-                catch (Exception ex)
-                {
-                    return Json("Error occurred. Error details: " + ex.Message);
                 }
             }
-            else
-            {
-                return Json("No files selected.");
-            }
+            return Json(new { fileName = fileName });
         }
     }
 }

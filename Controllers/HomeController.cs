@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Challenge_Alkemy.Data;
+using Challenge_Alkemy.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +10,14 @@ namespace Challenge_Alkemy.Controllers
 {
     public class HomeController : Controller
     {
+        private Challenge_AlkemyContext db = new Challenge_AlkemyContext();
+        private List<Posts> result;
+
         public ActionResult Index()
         {
-            return View();
+            result = db.Posts.OrderByDescending(p => p.Fecha_Creacion).ToList();
+
+            return View(result);
         }
 
         public ActionResult About()
