@@ -22,3 +22,16 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.postImage{
+    max-width: 70%;
+}
+
+input[type="file"]{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}

@@ -1,0 +1,4 @@
+﻿
+class Posts extends UploadImage {
+
+}
