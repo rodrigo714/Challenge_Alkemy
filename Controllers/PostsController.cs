@@ -103,10 +103,14 @@ namespace Challenge_Alkemy.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Titulo,Contenido,Imagen,Categoria,Fecha_Creacion")] Posts posts)
+        public ActionResult Edit([Bind(Include = "ID,Titulo,Contenido,Categoria,Fecha_Creacion")] Posts posts)
         {
+            HttpPostedFileBase file = Request.Files["ImageData"];
+            byte[] imageBytes = ConvertToBytes(file);
+
             if (ModelState.IsValid)
             {
+                posts.Imagen = imageBytes;
                 db.Entry(posts).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -149,33 +153,20 @@ namespace Challenge_Alkemy.Controllers
             base.Dispose(disposing);
         }
 
-        //https://www.youtube.com/watch?v=MFVhhjQhUFU
-
-        [HttpPost]
-        public JsonResult UploadFile(string id)
+        public byte[] ConvertToBytes(HttpPostedFileBase image)
         {
-            var path = "";
-            var fileExtension = "";
-            var fileName = "";
-
-            if (Request.Files.Count > 0)
+            try
             {
-                HttpPostedFileBase file = Request.Files[0];
-
-                if (file != null && file.ContentLength > 0)
-                {
-                    fileName = Path.GetFileName(file.FileName);
-                    fileExtension = Path.GetExtension(file.FileName);
-
-                    if (id != "null")
-                    {
-                        //do bits, save to DB etc./..
-
-                        file.SaveAs(path);
-                    }
-                }
+                byte[] imageBytes;
+                BinaryReader reader = new BinaryReader(image.InputStream);
+                imageBytes = reader.ReadBytes((int)image.ContentLength);
+                return imageBytes;
             }
-            return Json(new { fileName = fileName });
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
     }
 }

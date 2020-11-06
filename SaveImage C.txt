@@ -1,0 +1,58 @@
+Pablo Besteiro11:19
+ HttpPostedFileBase file = Request.Files["ImageData"];
+Pablo Besteiro11:23
+<input type="file" name="ImageData" class="custom-file-input" id="input-b1" required accept=".png, .jpg, .jpeg">
+Pablo Besteiro11:26
+@using (Html.BeginForm("FileUpload", "Board", FormMethod.Post, new { enctype = "multipart/form-data" }))
+Gabriel Miranda11:28
+Yo encontré esto, pero no lo pude probar :
+
+https://www.c-sharpcorner.com/UploadFile/b696c4/how-to-upload-and-display-image-in-mvc/
+
+https://www.mikesdotnetting.com/article/259/asp-net-mvc-5-with-ef-6-working-with-files
+Pablo Besteiro11:30
+public byte[] ConvertToBytes(HttpPostedFileBase image)
+        {
+            try
+            {
+                byte[] imageBytes;
+                BinaryReader reader = new BinaryReader(image.InputStream);
+                imageBytes = reader.ReadBytes((int)image.ContentLength);
+                return imageBytes;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+        }
+Pablo Besteiro11:37
+public ActionResult RetrieveImage(int id)
+        {
+            byte[] cover = _homeRepository.GetImageById(id);
+
+            if (cover != null)
+            {
+                return File(cover, "image/jpg");
+            }
+            else
+            {
+                return null;
+            }
+        }
+// Converts byte array to image
+        [AllowAnonymous]
+        public ActionResult RetrieveImage(int id)
+        {
+            byte[] cover = _homeRepository.GetImageById(id);
+
+            if (cover != null)
+            {
+                return File(cover, "image/jpg");
+            }
+            else
+            {
+                return null;
+            }
+        }
+<img src="/Home/RetrieveImage/@item.Id" alt="" class="d-block w-25 img-thumbnail" />
