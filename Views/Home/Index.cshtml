@@ -5,34 +5,111 @@
 
 <div class="container">
     <div class="text-center">
-        <h1 class="display-4"><strong>Alkemy Challenge</strong></h1>
+        @*<h1 class="display-4"><strong>Alkemy Challenge</strong></h1>*@
         <br />
-        <div class="imgbox">
-            <img src="~/Uploads/mandela.jpg" style=" border-radius: 20px 0 20px 0; max-width: 40%; height: auto;" />
-        </div>
-        <br />
-    </div>
-    @*<div class="form-group">
-        <form action="" method="post">
-            <div class="row">
-                <div class="col-md-4">
-                    <input type="text" name="search" id="search" placeholder="Search" class="form-control" />
+        <div class="sheetSlider sh--default">
+            <input id="s1" type="radio" name="slide1" checked />
+            <input id="s2" type="radio" name="slide1" />
+            <input id="s3" type="radio" name="slide1" />
+            <input id="s4" type="radio" name="slide1" />
+            <input id="s5" type="radio" name="slide1" />
+            <input id="s6" type="radio" name="slide1" />
+            <div class="sh__content">
+                <!-- Slider Item -->
+                <div class="sh__item">
+                    <img src="~/Content/img/bill-gates5-1.jpg" alt="imgText" class="imgSlider" />
+                    <!-- Item Info -->
+                    <div class="sh__meta">
+                        <h4>Challenge Alkemy</h4>
+                        <span>
+                            Bill Gates
+                        </span>
+                    </div>
                 </div>
-                <div class="col-md-1">
-                    <input type="submit" value="Search" id="buttonSearch" class="btn btn-outline-info" />
+                <!-- Slider Item -->
+                <div class="sh__item">
+                    <img src="~/Content/img/jack-ma-quotes04.jpg" alt="imgText" class="imgSlider" />
+                    <!-- Item Info -->
+                    <div class="sh__meta">
+                        <h4>Challenge Alkemy</h4>
+                        <span>
+                            Jack Ma
+                        </span>
+                    </div>
+                </div>
+                <!-- Slider Item -->
+                <div class="sh__item">
+                    <img src="~/Content/img/jobs-1.jpg" alt="imgText" class="imgSlider" />
+                    <!-- Item Info -->
+                    <div class="sh__meta">
+                        <h4>Challenge Alkemy</h4>
+                        <span>
+                            Steve Jobs
+                        </span>
+                    </div>
+                </div>
+                <!-- Slider Item -->
+                <div class="sh__item">
+                    <img src="~/Content/img/DOlpiLnWsAAQCk6.jpg" alt="imgText" class="imgSlider" />
+                    <!-- Item Info -->
+                    <div class="sh__meta">
+                        <h4>Challenge Alkemy</h4>
+                        <span>
+                            Nelson Mandela
+                        </span>
+                    </div>
+                </div>
+                <!-- Slider Item -->
+                <div class="sh__item">
+                    <img src="~/Content/img/ELHhjcGWwAA2AkF.jpg" alt="imgText" class="imgSlider" />
+                    <!-- Item Info -->
+                    <div class="sh__meta">
+                        <h4>Challenge Alkemy</h4>
+                        <span>
+                            Marcos Galperin
+                        </span>
+                    </div>
+                </div>
+                <!-- Slider Item -->
+                <div class="sh__item">
+                    <img src="~/Content/img/jobs-2.jpg" alt="imgText" class="imgSlider" />
+                    <!-- Item Info -->
+                    <div class="sh__meta">
+                        <h4>Challenge Alkemy</h4>
+                        <span>
+                            Steve Jobs
+                        </span>
+                    </div>
                 </div>
             </div>
-        </form>
-    </div>*@
+            <!--botones-->
+            <div class="sh__btns">
+                <label for="s1"></label>
+                <label for="s2"></label>
+                <label for="s3"></label>
+                <label for="s4"></label>
+                <label for="s5"></label>
+                <label for="s6"></label>
+            </div>
+            <!--flechas-->
+            <div class="sh__arrows">
+                <label for="s1"></label>
+                <label for="s2"></label>
+                <label for="s3"></label>
+                <label for="s4"></label>
+                <label for="s5"></label>
+                <label for="s6"></label>
+            </div><!-- .sh__arrows -->
+        </div>
+        <br />
     <div class="row">
         @foreach (var item in Model.ToList())
         {
             <div class="col-sm-6 col-md-2">
                 <div class="card">
                     <div class="card-header">
-                        <a asp-route-id="@item.ID" asp-controller="Posts" asp-action="Details">
-                            @*<img src="~/Uploads/rana.jpeg" height="50" />*@
-                            <img src="@Url.Action("RetrieveImage", "Posts", new { id = item.ID })" alt="Image" height="50" />
+                        <a href='@Url.Action("Details","Posts", new { id = item.ID })'>
+                            <img src="@Url.Action("RetrieveImage", "Posts", new { id = item.ID })" alt="Image" height="75" class="img-thumbnail" />
                         </a>
                     </div>
                     <div class="card-body">
@@ -40,7 +117,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <p><strong>@Html.DisplayFor(modelItem => item.Titulo)</strong></p>
+                                        <h4>@Html.DisplayFor(modelItem => item.Titulo)</h4>
                                     </td>
                                 </tr>
                                 <tr>
@@ -50,11 +127,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <form method="post" asp-controller="Posts" asp-action="Detail" asp-route-id="@item.ID">
-                                            <input type="submit" class="btn btn-success" value="Informacion" />
-                                            <input type="hidden" value="@item.ID" name="Id" />
-                                            <input type="hidden" name="view" value="1" />
-                                        </form>
+                                        <a class="btn btn-success" href='@Url.Action("Details","Posts", new { id = item.ID })'>Detalles</a>
                                     </td>
                                 </tr>
                             </tbody>

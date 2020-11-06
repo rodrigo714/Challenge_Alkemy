@@ -100,11 +100,16 @@ namespace Challenge_Alkemy.Controllers
         public ActionResult Edit([Bind(Include = "ID,Titulo,Contenido,Categoria,Fecha_Creacion")] Posts posts)
         {
             HttpPostedFileBase file = Request.Files["ImageData"];
-            byte[] imageBytes = ConvertToBytes(file);
+
+            if (file != null)
+            {
+                byte[] imageBytes = ConvertToBytes(file);
+                posts.Imagen = imageBytes;
+            }
+
 
             if (ModelState.IsValid)
             {
-                posts.Imagen = imageBytes;
                 db.Entry(posts).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

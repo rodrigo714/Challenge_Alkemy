@@ -32,7 +32,8 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Imagen)
+            @*@Html.DisplayFor(model => model.Imagen)*@
+            <img src="@Url.Action("RetrieveImage", "Posts", new { id = Model.ID })" alt="Image" height="75" />
         </dd>
 
         <dt>

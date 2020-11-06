@@ -150,6 +150,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\bill-gates5-1.jpg" />
+    <Content Include="Content\img\DOlpiLnWsAAQCk6.jpg" />
+    <Content Include="Content\img\ELHhjcGWwAA2AkF.jpg" />
+    <Content Include="Content\img\jack-ma-quotes04.jpg" />
+    <Content Include="Content\img\jack-ma-quotes07.jpg" />
+    <Content Include="Content\img\jobs-1.jpg" />
+    <Content Include="Content\img\jobs-2.jpg" />
+    <Content Include="Content\sheetslider.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -260,8 +268,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Uploads\mandela.jpg" />
-    <Content Include="Uploads\rana.jpeg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -298,9 +304,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Shared\_UploadPartial.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\img\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.5.1.slim.min.map" />
