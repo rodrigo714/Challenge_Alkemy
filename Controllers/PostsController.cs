@@ -61,20 +61,14 @@ namespace Challenge_Alkemy.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Titulo,Contenido,Categoria,Fecha_Creacion")] Posts posts, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "ID,Titulo,Contenido,Categoria,Fecha_Creacion")] Posts posts)
         {
-            if (posts.Imagen != null)
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    file.InputStream.CopyTo(ms);
-                    byte[] array = ms.GetBuffer();
-                    posts.Imagen = array;
-                }
-            }
+            HttpPostedFileBase file = Request.Files["ImageData"];
+            byte[] imageBytes = ConvertToBytes(file);
 
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
+                posts.Imagen = imageBytes;
                 db.Posts.Add(posts);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -159,7 +153,7 @@ namespace Challenge_Alkemy.Controllers
             {
                 byte[] imageBytes;
                 BinaryReader reader = new BinaryReader(image.InputStream);
-                imageBytes = reader.ReadBytes((int)image.ContentLength);
+                imageBytes = reader.ReadBytes(image.ContentLength);
                 return imageBytes;
             }
             catch (Exception)
@@ -167,6 +161,22 @@ namespace Challenge_Alkemy.Controllers
                 throw;
             }
 
+        }
+
+        [AllowAnonymous]
+        public ActionResult RetrieveImage(int id)
+        {
+            Posts posteo = db.Posts.Find(id);
+            byte[] cover = posteo.Imagen;
+
+            if (cover != null)
+            {
+                return File(cover, "image/jpg");
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
