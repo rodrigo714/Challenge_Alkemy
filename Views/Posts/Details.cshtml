@@ -10,49 +10,51 @@
 <div>
     <h4>Posts</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Titulo)
-        </dt>
+    <div class="card" style="width: 50rem">
+        <div class="card-header">
+                <img src="@Url.Action("RetrieveImage", "Posts", new { id = Model.ID })" alt="Image" class="img-thumbnail center-block" />
+        </div>
+        <div class="card-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Titulo)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Titulo)
-        </dd>
+                <dd>
+                    <strong>@Html.DisplayFor(model => model.Titulo)</strong> 
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Contenido)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Contenido)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Contenido)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Contenido)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Imagen)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Imagen)
+                </dt>
 
-        <dd>
-            @*@Html.DisplayFor(model => model.Imagen)*@
-            <img src="@Url.Action("RetrieveImage", "Posts", new { id = Model.ID })" alt="Image" height="75" />
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Categoria)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Categoria)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Categoria)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Categoria)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Fecha_Creacion)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Fecha_Creacion)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Fecha_Creacion)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Fecha_Creacion)
-        </dd>
-
-    </dl>
+            </dl>
+        </div>
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |

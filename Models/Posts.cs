@@ -10,7 +10,9 @@ namespace Challenge_Alkemy.Models
     {
         [Key]
         public int ID { get; set; }
+        [Required]
         public string Titulo { get; set; }
+        [Required]
         public string Contenido { get; set; }
         public byte[] Imagen { get; set; }
         public int Categoria { get; set; }
