@@ -138,7 +138,8 @@ namespace Challenge_Alkemy.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Posts posts = db.Posts.Find(id);
-            db.Posts.Remove(posts);
+            posts.IsDeleted = true;
+            //db.Posts.Remove(posts);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

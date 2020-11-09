@@ -7,13 +7,13 @@ namespace Challenge_Alkemy.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class notebook : IMigrationMetadata
+    public sealed partial class SoftDelete : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(notebook));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(SoftDelete));
         
         string IMigrationMetadata.Id
         {
-            get { return "202011032301262_notebook"; }
+            get { return "202011091426341_SoftDelete"; }
         }
         
         string IMigrationMetadata.Source

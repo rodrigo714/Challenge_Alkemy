@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EntityFramework.DynamicFilters;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
 
 namespace Challenge_Alkemy.Data
 {
@@ -20,7 +17,17 @@ namespace Challenge_Alkemy.Data
         }
 
         public DbSet<Models.Categoria> Categorias { get; set; }
-
         public DbSet<Models.Posts> Posts { get; set; }
+
+        private void FiltroSD(ref DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Filter("IsDeleted", (ISoftDeleted d) => d.IsDeleted, false);
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            // ...
+            FiltroSD(ref modelBuilder);
+        }
     }
 }
